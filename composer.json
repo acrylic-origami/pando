@@ -1,0 +1,22 @@
+{
+    "name": "fog/pando",
+    "description": "A Hack web framework for managing dependencies and implementing two-way binding for a web application, built into a majestic tree.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dev",
+            "email": "dev@shufflr.io"
+        }
+    ],
+    "require": {
+        "facebook/xhp-lib": "2.x",
+        "hhvm/xhp-js": "1.x",
+        "greenlion/php-sql-parser":"~4.0",
+        "nikic/fast-route": "0.8.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Pando\\": "src"
+        }
+    }
+}

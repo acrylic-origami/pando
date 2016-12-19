@@ -12,12 +12,12 @@
 // of _resolve.
 
 namespace Pando\Tree;
-abstract class AbstractFutureKeyedTree<+Tk as arraykey, +Tv> extends FutureKeyedTree<Tk, Tv> {
+class AbstractFutureKeyedTree<+Tv, +Tx as arraykey> extends FutureKeyedTree<Tv, Tx> {
 	<<__Override>>
 	public function __construct(
 		private (function(this): Awaitable<Tv>) $_resolver,
-		?Map<Tk, Awaitable<this>> $subtree,
-		?Tv $v
+		?ConstMap<Tx, Awaitable<this>> $subtree,
+		?Tv $v = null
 		) {
 		parent::__construct($subtree, $v);
 	}

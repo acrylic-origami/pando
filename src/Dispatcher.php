@@ -12,7 +12,9 @@ class Dispatcher<+Tk as arraykey, +Tv, +TRoute as Route<Tv, Tk>> extends Tree<\F
 	                                             //                             └── dependency -> this
 	private ?AbstractFKT<Tk, TRoute> $default;
 	public function __construct((function((function(\FastRoute\RouteCollector): void)): \FastRoute\Dispatcher) $fdispatcher = fun('\FastRoute\simpleDispatcher'), TRoute ...$routes) {
-		parent::__construct($fdispatcher((\FastRoute\RouteCollector $r) ==> {
+		parent::__construct(
+			Map{},
+			$fdispatcher((\FastRoute\RouteCollector $r) ==> {
 			foreach($routes as $route) {
 				if($route instanceof Route\Default && is_null($this->default)) 
 					$this->default = new AbstractFKT($route->fn, $route->dep);

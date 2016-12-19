@@ -1,4 +1,4 @@
-<?hh // strict
+<?hh // decl
 abstract class FKT<Tk, Tv, TResolver> {
 	protected ?Map<Tk, Awaitable<this>> $subtree;
 	protected ?Tv $v;
@@ -78,7 +78,7 @@ class Dispatcher<Tk, Tv> extends FKT<Tk, FKT<Tk, Tv, void>, (string, string)> { 
 		// return ($this->fdispatcher->dispatch($route[0], $route[1]))(Asio\m($this->subtree->map((Awaitable<this> $sub_dispatcher) ==> $sub_dispatcher))); // if only classes were first-class citizens. see above.
 		$dispatched = $this->fdispatcher->dispatch($route[0], $route[1]);
 		if(!is_null($dispatched))
-			return $dispatched->put(Asio\m($this->subtree->map((this $sub_dispatcher) ==> $sub_dispatcher->resolve($route)))); // although `put` is not aync, `Asio\m()` is, making this function an async eventually returning an FKT<Tk, Tv>.
+			return $dispatched->put(HH\Asio\m($this->subtree->map((this $sub_dispatcher) ==> $sub_dispatcher->resolve($route)))); // although `put` is not aync, `Asio\m()` is, making this function an async eventually returning an FKT<Tk, Tv>.
 		else
 			throw new \BadMethodCallException('Could not dispatch route `'.$route.'`: does not exist.');
 	}

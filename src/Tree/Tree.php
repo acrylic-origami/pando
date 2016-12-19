@@ -1,9 +1,9 @@
 <?hh // strict
-namespace Shufflr\Tree;
-use \Shufflr\KeyedContainerWrapper as KC;
+namespace Pando\Tree;
+use \Pando\Util\Collection\KeyedContainerWrapper as KC;
 // oooooh, just you wait until Tree<+Tv, Tx as arraykey, +TIterable as KeyedIterable<Tx, this>> comes along
 // this won't be just any ordinary tree
-// oooh no, this'll be the fucking Pando of abstract trees
+// oooh no, this'll be the fucking Pando\ of abstract trees
 
 // ...though unfortunately KeyedIterable is still invariant on Tx, and until the <<__Const>> directive is introduced, it'll stay that way.
 class Tree<+Tv, +Tx as arraykey> {

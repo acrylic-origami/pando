@@ -1,5 +1,6 @@
 <?hh // strict
-namespace Shufflr;
+namespace Pando;
+use \Pando\Tree\Tree;
 class JSONParser implements Parser {
 	public function __construct() {}
 	public function parse(string $str): ?\KeyedContainer<arraykey, mixed> {

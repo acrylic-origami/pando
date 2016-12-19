@@ -1,7 +1,8 @@
 <?hh // strict
-namespace Shufflr\Affected;
-use \Shufflr\Affected;
-final class MySQLIdentifierTree extends \Shufflr\KeyedIterableWrapper<string, MySQLDBIdentifierTree, Map<string, MySQLDBIdentifierTree>> {
+namespace Pando\Affected;
+use \Pando\Affected;
+use \Pando\Util\Collection\KeyedIterableWrapper;
+final class MySQLIdentifierTree extends KeyedIterableWrapper<string, MySQLDBIdentifierTree, Map<string, MySQLDBIdentifierTree>> {
 	const string CATCHALL = MySQLDBIdentifierTree::CATCHALL;
 	public function __construct(
 		public string $default_db,

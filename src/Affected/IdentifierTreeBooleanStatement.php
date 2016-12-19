@@ -1,7 +1,7 @@
 <?hh // strict
-namespace Shufflr\Affected;
+namespace Pando\Affected;
 <<__ConsistentConstruct>>
-class IdentifierTreeBooleanStatement<T as \Shufflr\IdentifierTree> {
+class IdentifierTreeBooleanStatement<T as \Pando\IdentifierTree> {
 	public function __construct(
 		protected (function(T): bool) $statement = ((T $v) ==> true)
 	) {}

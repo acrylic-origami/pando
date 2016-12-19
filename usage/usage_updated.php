@@ -1,11 +1,11 @@
 <?hh
-use Shufflr\Tree\AbstractFutureKeyedTree;
-use Shufflr\Tree\Route\Tracked;
-use Shufflr\Tree\Route\GET;
-use Shufflr\Tree\Route\POST;
-use Shufflr\Tree\Route\PUT;
-use Shufflr\Tree\Route\HEAD;
-type XHP_FKT = AbstractFutureKeyedTree<string, \XHPRoot>;
+use Pando\Tree\AbstractFutureKeyedTree;
+use Pando\Tree\Route\Tracked;
+use Pando\Tree\Route\GET;
+use Pando\Tree\Route\POST;
+use Pando\Tree\Route\PUT;
+use Pando\Tree\Route\HEAD;
+type XHP_FKT = Pando\Tree\AbstractFutureKeyedTree<string, \XHPRoot>;
 require_once(__DIR__ . '/bootstrap.php');
 $root_dispatcher = new XHPDispatcher(
 	new GET('/blog', async(XHP_FKT $deps) {

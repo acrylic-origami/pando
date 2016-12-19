@@ -1,7 +1,7 @@
 <?hh // strict
-namespace Shufflr\TreeRouter\Route;
-use \Shufflr\TreeRouter\Route;
-use \Shufflr\TreeRouter\Dispatcher;
+namespace Pando\TreeRouter\Route;
+use \Pando\TreeRouter\Route;
+use \Pando\TreeRouter\Dispatcher;
 abstract class PathedRoute<+Tv, +Tx as arraykey> extends Route<Tv, Tx> {
 	// <<__Override>>
 	public function __construct(

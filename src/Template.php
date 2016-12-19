@@ -1,13 +1,12 @@
 <?hh // strict
-namespace Shufflr;
+namespace Pando;
 class Template {
 	protected Set<string> $mapping_set;
 	public function __construct(
 		protected string $templateHTML,
-		protected Vector<string> $mapping,
-		protected Vector<Action> $subscriptions = Vector{} // check that this can indeed work with just a vector of Actions, otherwise this might need to be something like a Vector<PostSubscription>
+		protected Vector<string> $mapping
 		) {
-		$this->mapping_set = Set($this->mapping);
+		$this->mapping_set = new \Set($this->mapping);
 	}
 	public function prune(Map<arraykey, arraykey> $information_entity) {
 		/*

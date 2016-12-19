@@ -1,6 +1,6 @@
 <?hh // strict
-namespace Shufflr\Tree;
-// use \Shufflr\KeyedContainerWrapper as KC;
+namespace Pando\Tree;
+// use \Pando\KeyedContainerWrapper as KC;
 abstract class FutureKeyedTree<+Tv, +Tx as arraykey> extends Tree<Tv, Tx> {
 	private ?Tv $v; // shadow private variable from Tree... waiting for that object-protected
 	public function __construct(

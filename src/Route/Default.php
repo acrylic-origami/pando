@@ -1,8 +1,8 @@
 <?hh // strict
-namespace Shufflr\TreeRouter\Route;
-use \Shufflr\TreeRouter\Route;
+namespace Pando\TreeRouter\Route;
+use \Pando\TreeRouter\Route;
 class Default<Tk, Tv> implements Route {
 	public function __construct(
 		public (function(): Awaitable<Tv>) $fn, 
-		public ?ImmMap<arraykey, \Shufflr\TreeRouter\Dispatcher<Tk, Tv, this>> $dep) {}
+		public ?ImmMap<arraykey, \Pando\TreeRouter\Dispatcher<Tk, Tv, this>> $dep) {}
 }

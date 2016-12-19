@@ -1,5 +1,5 @@
 <?hh // strict
-namespace Shufflr;
+namespace Pando;
 <<__ConsistentConstruct>> // Mostly to accept just the u_id. Else, building the subscription tree will be a total pain. I'm still on the fence about how doable this actually all is...
 // Nope, the __ConsistentConstruct does a lot more than sit there with its fancy syntax. With it, we can enforce an Identifiable approach, forcing the calling scope to only provide the base dependencies and the identity. 
 // The constructor is the only function to be called _exactly_ once during the lifetime of the object, so it is the only place in which we can have arguments of covariant types. It turns out that __ConsistentConstruct only enforces the _signature_ of the constructor, not its implementation (makes a lot of sense, thanks Hack team!) (which means at least we can control the setting of the identity and _strongly_ suggest the unpacking of the dependencies).

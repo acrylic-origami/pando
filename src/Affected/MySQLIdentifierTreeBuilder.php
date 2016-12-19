@@ -1,7 +1,7 @@
 <?hh // strict
-namespace Shufflr\Affected;
-use \Shufflr\IdentifierTreeBuilder;
-use \Shufflr\ParsedQueryCache;
+namespace Pando\Affected;
+use \Pando\IdentifierTreeBuilder;
+use \Pando\ParsedQueryCache;
 type SQLIdentifier = shape('db' => string, 'table' => string, 'col' => string);
 final class MySQLIdentifierTreeBuilder implements IdentifierTreeBuilder {
 	const string CATCHALL = MySQLIdentifierTree::CATCHALL;
@@ -26,7 +26,7 @@ final class MySQLIdentifierTreeBuilder implements IdentifierTreeBuilder {
 		return $this->build($identifier['col'], $identifier['table'], $identifier['db']);
 	}
 	public function build_from_identifiers(Vector<SQLIdentifier> $identifiers): Vector<MySQLIdentifierTree> {
-		$identifier_wrapper = new VectorWrapper($identifiers);
+		$identifier_wrapper = new \Pando\Util\Collection\VectorWrapper($identifiers);
 		return $identifier_wrapper->reduce(
 			(MySQLIdentifierTree $prev, SQLIdentifier $identifier) ==> $prev->union($this->build_from_identifier($identifier))
 			, new MySQLIdentifierTree($this->db));

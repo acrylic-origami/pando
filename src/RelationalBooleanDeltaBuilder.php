@@ -1,5 +1,5 @@
 <?hh // decl
-namespace Shufflr;
+namespace Pando;
 class RelationalBooleanDeltaBuilder implements BooleanDeltaBuilder {
 	protected SQLParserCache $parser;
 	protected $namespace = array();

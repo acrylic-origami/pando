@@ -1,5 +1,5 @@
 <?hh // decl
-namespace Shufflr\Util;
+namespace Pando\Util;
 class Classes {
 	public static function parse_classname($name) {
 	  return array(

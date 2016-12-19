@@ -1,5 +1,5 @@
 <?hh // strict
-namespace Shufflr;
+namespace Pando;
 abstract class TrackedDatabase<TDelta as DatabaseDelta, TDeltaCollection as Iterable<TDelta>> as Database {
 	protected TDeltaCollection $deltas; //  = new MySQLDeltaCollection(Map{}); quickfix: look into this more
 	

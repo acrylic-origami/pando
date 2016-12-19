@@ -1,5 +1,5 @@
 <?hh // strict
-namespace Shufflr;
+namespace Pando;
 interface IdentifierTreeBuilder {
 	public function build(?string $identifier): IdentifierTree;
 }

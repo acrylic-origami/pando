@@ -1,7 +1,7 @@
 <?hh // strict
-namespace Shufflr\Affected;
-use \Shufflr\IdentifierTree;
-final class MySQLDBIdentifierTree extends \Shufflr\KeyedIterableWrapper<string, Set<string>, Map<string, Set<string>>> implements IdentifierTree {
+namespace Pando\Affected;
+use \Pando\IdentifierTree;
+final class MySQLDBIdentifierTree extends \Pando\Util\Collection\KeyedIterableWrapper<string, Set<string>, Map<string, Set<string>>> implements IdentifierTree {
 	const string CATCHALL = '*';
 	/* theoretically I could get really fancy and define an abstract class of { bool catch_all, [T as Collection] $collection, ?[T as Collection] $ambiguous } for every level, then chain them together somehow in the calling class with something like `compose('RelationalDatabaseStructure', 'RelationalTableStructure')`;
 		RelationableDatabaseStructure<T as Collection> extends Structure<T>

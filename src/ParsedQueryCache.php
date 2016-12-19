@@ -1,11 +1,13 @@
 <?hh // strict
-namespace Shufflr;
+namespace Pando;
+use Pando\Tree\Tree;
 class ParsedQueryCache {
 	const string IDENTIFY_QUOTE = '`';
 	const string IDENTIFY_DELIMITER = '.';
 	const string IDENTIFY_ESCAPED_QUOTE = '``';
 	
 	public function __construct(
+		/* HH_FIXME[2049] Non-Hack libraries without HHI files throw `Unbound Name` errors in strict mode. Luckily, I have the privilege of knowing this class does indeed exist. */
 		protected \PHPSQLParser\PHPSQLParser $parser, 
 		protected \Memcached $memcached) {
 	}

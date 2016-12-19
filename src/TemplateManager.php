@@ -1,5 +1,5 @@
 <?hh // strict
-namespace Shufflr;
+namespace Pando;
 // type TemplateScaffold = shape('template' => string, 'mapping'=>Map<string, mixed>);
 class TemplateManager {
 	public Map<string, Template> $cache = Map{};

@@ -1,3 +1,3 @@
 <?hh // strict
-namespace Shufflr;
+namespace Pando;
 type DatabaseDelta = shape();

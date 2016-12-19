@@ -11,7 +11,7 @@
 // Anonymous classes would rectify this with constraints on the return parameter
 // of _resolve.
 
-namespace Shufflr\Tree;
+namespace Pando\Tree;
 abstract class AbstractFutureKeyedTree<+Tk as arraykey, +Tv> extends FutureKeyedTree<Tk, Tv> {
 	<<__Override>>
 	public function __construct(

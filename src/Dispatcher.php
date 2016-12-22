@@ -7,22 +7,29 @@ use Pando\Util\Collection\KeyedContainerWrapper as KC;
 // type RenderTree<Tk, Tv> = AbstractFKT<Tk, Tv>; // the `string` has immense importance here: it dictates the final type of the result. If we're using XHP, `string` will be replaced by XHPRoot. (replaced by generic Tv, to keep things general for the meantime. Maybe there's such thing as a __toStringable?)
 // consider wrapping an FKT, and injecting the information into it at dispatch-time.
 // nah, then it just re-becomes Dispatcher. We can't get around needing that route information.
-class Dispatcher<+Tk as arraykey, +Tv, +TRoute as Route<Tv, Tk>> extends Tree<\FastRoute\Dispatcher, Tk> {
+abstract class Dispatcher<+Tv, +Tk as arraykey> extends AbstractFutureKeyedTree<Tv, Tk> {
 	private KC<Tk, KC<Tk, TRoute>> $search_tree; // method -> route string -> route
 	                                             //                             └── dependency -> this
+	protected \FastRoute\Dispatcher $_dispatcher;
 	private ?AbstractFKT<Tk, TRoute> $default;
-	public function __construct((function((function(\FastRoute\RouteCollector): void)): \FastRoute\Dispatcher) $fdispatcher = fun('\FastRoute\simpleDispatcher'), TRoute ...$routes) {
-		parent::__construct(
-			Map{},
-			$fdispatcher((\FastRoute\RouteCollector $r) ==> {
-			foreach($routes as $route) {
+	public function __construct(
+		ConstMap<Tk, this> $forest,
+		(function(this): Awaitable<Tv>) $_resolver, 
+		(function((function(\FastRoute\RouteCollector): void)): \FastRoute\Dispatcher) $fdispatcher = fun('\FastRoute\simpleDispatcher')) {
+		$this->_dispatcher = $fdispatcher((\FastRoute\RouteCollector $r) ==> {
+			foreach($forest as $route) {
+				// this is not yet the most general case: it assumes ~(PathedRoute) => Default
+				// getting up and running, that's not a bad assumption
 				if($route instanceof Route\Default && is_null($this->default)) 
 					$this->default = new AbstractFKT($route->fn, $route->dep);
-				elseif($route instanceof Route\PathedRoute) {
-					$r->addRoute(\Pando\Util\Class\classname($route), $route->route, $route);
-				}
+				elseif($route instanceof Route\PathedRoute)
+					$r->addRoute(\Pando\Util\Class\classname($route), $route->path, $route);
 			}
-		}));
+		});
+		parent::__construct(
+			$resolver,
+			Map{},
+			);
 	}
 	
 	<<__Memoize>> // not totally sold on this: what if $this->subtree changes? Will have to find a way around this if it ever arises.
@@ -30,12 +37,14 @@ class Dispatcher<+Tk as arraykey, +Tv, +TRoute as Route<Tv, Tk>> extends Tree<\F
 		$dispatched = $this->get_v()->dispatch($method, $uri); // this should be a shape >_>
                                                        // consider Hackifying FastRoute to make this array a shape
 		if($dispatched[0] === \FastRoute\Dispatcher::FOUND) {
-			$route = $dispatched[1][1];
-			$this->subtree = $route; // Coming back to this and looking everything over, I don't think this step is crucial, but it's nice because in the end the dispatcher tree is the actual path of routes that was resolved
+			$route = $dispatched[1];
+			// $this->subtree = $route; // Coming back to this and looking everything over, I don't think this step is crucial, but it's nice because in the end the dispatcher tree is the actual path of routes that was resolved
 			return new AbstractFKT($dispatched[1][0], $this->subtree->map((this $subdispatcher) ==> $subdispatcher->dispatch($method, $uri)));
 		}
 		elseif(!is_null($this->default))
 			// $this->subtree = 
-			throw new \BadMethodCallException('Could not dispatch route `'.$route.'`: does not exist.');
+			return $this->default;
+		else
+			throw new \BadMethodCallException(sprintf('Could not dispatch route `%s::%s`: does not exist.', $method, $uri));
 	}
 }

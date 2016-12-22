@@ -15,8 +15,8 @@ namespace Pando\Tree;
 class AbstractFutureKeyedTree<+Tv, +Tx as arraykey> extends FutureKeyedTree<Tv, Tx> {
 	<<__Override>>
 	public function __construct(
-		private (function(this): Awaitable<Tv>) $_resolver,
 		?ConstMap<Tx, Awaitable<this>> $subtree,
+		private (function(this): Awaitable<Tv>) $_resolver,
 		?Tv $v = null
 		) {
 		parent::__construct($subtree, $v);

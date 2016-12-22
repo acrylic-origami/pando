@@ -8,15 +8,14 @@ use \Pando\Util\Collection\KeyedContainerWrapper as KC;
 // ...though unfortunately KeyedIterable is still invariant on Tx, and until the <<__Const>> directive is introduced, it'll stay that way.
 class Tree<+Tv, +Tx as arraykey> {
 	// private KeyedContainerWrapper<Tx, this, KeyedContainer<Tx, this>> $forest;
-	private KC<Tx, this> $forest;
 	// `this` disallowed as a type constraint forces the third parameter to be `KeyedContainer` rather than a generic `TCollection [as KeyedContainer<Tx, this>]`
 	public function __construct(
-		?KeyedContainer<Tx, this> $forest,
+		private KC<Tx, this> $forest,
 		private ?Tv $v
 		) {
-		$this->forest = new KC($forest);
 	}
-	public final function get_v(): ?Tv {
+	public function get_v(): ?Tv { // final
+		// this method might or might not be final -- do I want subclasses to have their own private $vs? Smells bad: upcasting will yield a different value.
 		return $this->v;
 	}
 	public final function get_forest(): ?KC<Tx, this> {

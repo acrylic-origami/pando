@@ -109,22 +109,22 @@ class KeyedContainerWrapper<+Tk, +Tv> extends TraversableWrapper<Tv, KeyedContai
 	
 	//** Iterable implementation **//
 	
-	public function concat<Tu super Tv>(Traversable<Tu> $incoming): Iterable<Tu> {
+	public function concat<Tu super Tv>(Traversable<Tu> $incoming): KeyedContainerWrapper<int, Tu> {
 		$ret = $this->reduce((?Vector<Tu> $prev, Tv $next) ==> {
 			invariant(!is_null($prev), 'Cannot concat to null collection');
 			return $prev->add($next);
 		}, (Map{})->concat($incoming));
 		invariant(!is_null($ret), 'Concat unexpectedly created null iterable.');
-		return $ret;
+		return new static($ret);
 	}
-	public function filter((function(Tv): bool) $fn): Iterable<Tv> {
+	public function filter((function(Tv): bool) $fn): this {
 		$M = Map{};
 		$units = $this->get_units();
 		if(!is_null($units))
 			foreach($units as $k=>$unit)
 				if($fn($unit))
 					$M[$k] = $unit;
-		return $M;
+		return new static($M);
 	}
 	public function firstValue(): Tv {
 		$units = $this->get_units();
@@ -146,37 +146,32 @@ class KeyedContainerWrapper<+Tk, +Tv> extends TraversableWrapper<Tv, KeyedContai
 		foreach($units as $v) {}
 		return $v;
 	}
-	public function lazy(): Iterable<Tv> {
+	public function lazy(): this { // ... : this maybe?
 		return $this; // isn't this already as lazy as it can get? o_O I mean really, what is `Iterable::lazy()` meant to do anyways?
 	}
-	public function map<Tu>((function(Tv): Tu) $fn): Iterable<Tu> {
+	public function map<Tu>((function(Tv): Tu) $fn): KeyedContainerWrapper<Tk, Tu> {
 		$M = Map{};
 		$units = $this->get_units();
 		if(!is_null($units))
 			foreach($units as $k=>$unit)
 				$M[$k] = $fn($unit);
-		return $M;
+		return new static($M);
 	}
-	public function skip(int $n): Iterable<Tv> {
-		$M = Map{};
-		$units = $this->get_units();
-		if(!is_null($units))
-			foreach($units as $k => $unit)
-				if($n-- <= 0)
-					$M[$k] = $unit;
-		return $M;
+	public function skip(int $n): this {
+		$copy = clone $this;
+		foreach($copy as $_)
+			if($n-- === 0)
+				break; // note: although the iterator state is stored only in this class, KeyedContainer is not Iterable so we don't need to keep two iterators in sync
+		return $copy;
 	}
-	public function skipWhile((function(Tv): bool) $fn): Iterable<Tv> {
-		$M = Map{};
-		$this->keyed_reduce((?bool $prev, Pair<Tk, Tv> $next) ==> {
-			$prev = $prev || $fn($next[1]); // no love for bool |= bool? aww.
-			if($prev)
-				$M[$next[0]] = $next[1];
-			return $prev;
-		}, false);
-		return $M;
+	public function skipWhile((function(Tv): bool) $fn): this {
+		$copy = clone $this;
+		foreach($copy as $unit)
+			if(!$fn($unit))
+				break;
+		return $copy;
 	}
-	public function slice(int $start, int $len): Iterable<Tv> {
+	public function slice(int $start, int $len): this {
 		$ret = $this->keyed_reduce_until(
 			(?Map<Tk, Tv> $prev, Pair<Tk, Tv> $next) ==> {
 				invariant(!is_null($prev), 'Implementation error: prev cannot be null.');
@@ -186,9 +181,9 @@ class KeyedContainerWrapper<+Tk, +Tv> extends TraversableWrapper<Tv, KeyedContai
 			Map{}
 		);
 		invariant(!is_null($ret), 'Implementation error: result from slicing cannot be null.');
-		return $ret;
+		return new static($ret);
 	}
-	public function take(int $n): Iterable<Tv> {
+	public function take(int $n): this {
 		$ret = $this->keyed_reduce_until(
 			(?Map<Tk, Tv> $prev, Pair<Tk, Tv> $next) ==> {
 				invariant(!is_null($prev), 'Implementation error: prev cannot be null.');
@@ -199,9 +194,9 @@ class KeyedContainerWrapper<+Tk, +Tv> extends TraversableWrapper<Tv, KeyedContai
 			Map{}
 		);
 		invariant(!is_null($ret), 'Implementation error: result of taking cannot be null, only empty Map.');
-		return $ret;
+		return new static($ret);
 	}
-	public function takeWhile((function(Tv): bool) $until): Iterable<Tv> {
+	public function takeWhile((function(Tv): bool) $until): this {
 		$ret = $this->keyed_reduce_until(
 			fun('map_add'),
 			// (Map<Tk, Tv> $prev, Pair<Tk, Tv> $next) ==> $prev->add($next),
@@ -209,7 +204,7 @@ class KeyedContainerWrapper<+Tk, +Tv> extends TraversableWrapper<Tv, KeyedContai
 			Map{}
 		);
 		invariant(!is_null($ret), 'Failing this refinement is impossible because the result begins with a non-null value, unless the `keyed_reduce_until` or `map_add` implementations have changed for the worse.');
-		return $ret;
+		return new static($ret);
 	}
 	/* HH_IGNORE_ERROR[4045] Oddly, the Iterable interface doesn't parameterize the array, but its sitting sheltered in a decl. */
 	public function toArray(): array {
@@ -248,7 +243,7 @@ class KeyedContainerWrapper<+Tk, +Tv> extends TraversableWrapper<Tv, KeyedContai
 	public function toVector(): Vector<Tv> {
 		return new Vector($this->get_units());
 	}
-	public function values(): Iterable<Tv> {
+	public function values(): this {
 		return $this; // again, like with lazy... why use this?!
 	}
 	public function zip<Tu>(Traversable<Tu> $incoming): Iterable<Pair<Tv, Tu>> {

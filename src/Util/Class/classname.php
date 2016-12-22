@@ -1,6 +1,6 @@
 <?hh // strict
 namespace Pando\Util\Class;
-function classname(string $name): string {
-	$full = parse_classname($name);
+function classname(\stdClass $name): string {
+	$full = parse_classname(get_class($name));
 	return $full['classname'];
 }

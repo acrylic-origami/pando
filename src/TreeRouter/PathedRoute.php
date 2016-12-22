@@ -1,7 +1,6 @@
 <?hh // strict
-namespace Pando\TreeRouter\Route;
-use \Pando\TreeRouter\Route;
-use \Pando\TreeRouter\Dispatcher;
+namespace Pando\Route;
+use \Pando\Dispatcher;
 abstract class PathedRoute<+Tv, +Tx as arraykey> extends Route<Tv, Tx> {
 	// <<__Override>>
 	public function __construct(

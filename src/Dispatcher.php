@@ -26,9 +26,7 @@ class Dispatcher<+Tv, +Tk as arraykey, +TRoute as Route\Route<Tv, Tk>> {
 	}
 	
 	<<__Memoize>> // not totally sold on this: what if $this->subtree changes? Will have to find a way around this if it ever arises.
-	public function dispatch(string $method, string $uri): Tv { // : UnresolvedTree<Tv, Tk>
-	
-		// this is essentially resolve, except with extra information needed. If only we could can resolve on Dispatcher, but alas it's needed for general FKT.
+	public function dispatch(string $method, string $uri): Route\Route<Tv, Tk> { // : UnresolvedTree<Tv, Tk>
 		$dispatched = $this->_dispatcher->dispatch($method, $uri); // this should be a shape >_>
                                                        // consider Hackifying FastRoute to make this array a shape
 		if($dispatched[0] === \FastRoute\Dispatcher::FOUND)
@@ -38,7 +36,7 @@ class Dispatcher<+Tv, +Tk as arraykey, +TRoute as Route\Route<Tv, Tk>> {
 		else {
 			throw new \BadMethodCallException(sprintf('No routes match `%s` request for `%s` path and no default available for path.', $method, $uri));
 		}
-		return $route->resolve($method, $uri);
+		return $route;
 		// $dependencies = $route->get_dependencies();
 		// if(!is_null($dependencies))
 		// 	return new UnresolvedTree($dependencies->map((this $subdispatcher) ==> $subdispatcher->dispatch($method, $uri)), $route->get_resolver());

@@ -1,7 +1,7 @@
 <?hh // strict
 namespace Pando\Route;
 use \Pando\Dispatcher;
-abstract class PathedRoute<+Tv, -Tx as arraykey> extends Route<Tv, Tx> {
+abstract class PathedRoute<+Tv, +Tx as arraykey> extends Route<Tv, Tx> {
 	// <<__Override>>
 	public function __construct(
 		public string $path,

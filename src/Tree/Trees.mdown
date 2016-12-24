@@ -21,6 +21,6 @@ Let the catalogue begin.
 
 ### Tree<Tv> | ?KeyedIterable<mixed, this> | ?Tv $v
 
-Generalized Tree. If `KeyedIterable` were covariant on its `Tk`, then `Tree` would have a `-Tk` in place of that `mixed`.
+Generalized Tree. If `KeyedIterable` were covariant on its `Tk`, then `Tree` would have a `+Tk` in place of that `mixed`.
 
 ### 

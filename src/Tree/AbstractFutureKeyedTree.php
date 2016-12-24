@@ -12,7 +12,7 @@
 // of _resolve.
 
 namespace Pando\Tree;
-class AbstractFutureKeyedTree<+Tv, -Tx as arraykey> extends FutureKeyedTree<Tv, Tx> {
+class AbstractFutureKeyedTree<+Tv, +Tx as arraykey> extends FutureKeyedTree<Tv, Tx> {
 	<<__Override>>
 	public function __construct(
 		?ConstMap<Tx, Awaitable<this>> $subtree,

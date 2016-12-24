@@ -3,7 +3,7 @@ namespace Pando\Route;
 use \Pando\Dispatcher;
 use \Pando\Tree\Tree;
 use \Pando\Util\Collection\KeyedContainerWrapper as KC;
-abstract class Route<+Tv, -Tx as arraykey> {
+abstract class Route<+Tv, +Tx as arraykey> {
 	// extends \Pando\Tree\AbstractFutureKeyedTree<(Tv, ?arraykey), Tx>
 	// extends \Pando\Tree\UnresolvedTree<(Tv, ?arraykey), Tx>
 	private KC<Tx, Dispatcher<Tv, Tx, this>> $dependencies;

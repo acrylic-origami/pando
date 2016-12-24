@@ -9,7 +9,7 @@ use Pando\Util\Collection\KeyedContainerWrapper as KC;
 // type RenderTree<Tk, Tv> = AbstractFKT<Tk, Tv>; // the `string` has immense importance here: it dictates the final type of the result. If we're using XHP, `string` will be replaced by XHPRoot. (replaced by generic Tv, to keep things general for the meantime. Maybe there's such thing as a __toStringable?)
 // consider wrapping an FKT, and injecting the information into it at dispatch-time.
 // nah, then it just re-becomes Dispatcher. We can't get around needing that route information.
-class Dispatcher<+Tv, -Tk as arraykey, +TRoute as Route\Route<Tv, Tk>> {
+class Dispatcher<+Tv, +Tk as arraykey, +TRoute as Route\Route<Tv, Tk>> {
 	private KC<Tk, KC<Tk, TRoute>> $search_tree; // method -> route string -> route
 	                                             //                             └── dependency -> this
 	private ?Route\Route<Tv, Tk> $default;

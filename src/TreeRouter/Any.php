@@ -2,7 +2,7 @@
 namespace Pando\TreeRouter\Route;
 use \Pando\TreeRouter\Route;
 use \Pando\TreeRouter\Dispatcher;
-class Any<+Tv, -Tx as arraykey> extends Route<Tv, Tx> {
+class Any<+Tv, +Tx as arraykey> extends Route<Tv, Tx> {
 	// <<__Override>>
 	public function __construct(
 		public string $path,

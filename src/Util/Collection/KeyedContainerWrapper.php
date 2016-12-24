@@ -1,7 +1,7 @@
 <?hh // strict
 namespace Pando\Util\Collection;
-// class KeyedContainerWrapper<+Tk, +Tv, +TCollection as KeyedContainer<Tk, Tv>>
-class KeyedContainerWrapper<+Tk, +Tv> extends TraversableWrapper<Tv, KeyedContainer<Tk, Tv>> implements Iterable<Tv> {
+// class KeyedContainerWrapper<-Tk, +Tv, +TCollection as KeyedContainer<Tk, Tv>>
+class KeyedContainerWrapper<-Tk, +Tv> extends TraversableWrapper<Tv, KeyedContainer<Tk, Tv>> implements Iterable<Tv> {
 	
 	/* HH_IGNORE_ERROR[4120] Waiting for <<__Const>>, then this will be fine. */
 	public function key_exists(Tk $k): bool {

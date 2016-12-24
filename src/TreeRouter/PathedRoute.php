@@ -1,7 +1,7 @@
 <?hh // strict
 namespace Pando\Route;
 use \Pando\Dispatcher;
-abstract class PathedRoute<+Tv, +Tx as arraykey> extends Route<Tv, Tx> {
+abstract class PathedRoute<+Tv, -Tx as arraykey> extends Route<Tv, Tx> {
 	// <<__Override>>
 	public function __construct(
 		public string $path,
@@ -10,7 +10,7 @@ abstract class PathedRoute<+Tv, +Tx as arraykey> extends Route<Tv, Tx> {
 		parent::__construct(async(this $v) ==> tuple(await $_resolver($v), null), $dep);
 	}
 	<<__Override>>
-	public function _resolve(): Awaitable<Tv> {
+	public function _resolve(string $method, string $uri): Awaitable<Tv> {
 		$resolver = $this->_resolver;
 		return $resolver($this);
 	}

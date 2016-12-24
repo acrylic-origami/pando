@@ -6,7 +6,7 @@ use \Pando\Util\Collection\KeyedContainerWrapper as KC;
 // oooh no, this'll be the fucking Pando\ of abstract trees
 
 // ...though unfortunately KeyedIterable is still invariant on Tx, and until the <<__Const>> directive is introduced, it'll stay that way.
-class Tree<+Tv, +Tx as arraykey> {
+class Tree<+Tv, -Tx as arraykey> {
 	// private KeyedContainerWrapper<Tx, this, KeyedContainer<Tx, this>> $forest;
 	// `this` disallowed as a type constraint forces the third parameter to be `KeyedContainer` rather than a generic `TCollection [as KeyedContainer<Tx, this>]`
 	public function __construct(

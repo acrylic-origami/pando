@@ -2,6 +2,7 @@
 namespace Pando\Route;
 use \Pando\Dispatcher;
 use \Pando\Tree\Tree;
+use \Pando\Tree\ViewTree;
 use \Pando\Util\Collection\KeyedContainerWrapper as KC;
 abstract class Route<+Tv, +Tx as arraykey> {
 	// extends \Pando\Tree\AbstractFutureKeyedTree<(Tv, ?arraykey), Tx>
@@ -15,10 +16,10 @@ abstract class Route<+Tv, +Tx as arraykey> {
 	public function get_dependencies(): KC<Tx, Dispatcher<Tv, Tx, this>> {
 		return $this->dependencies;
 	}
-	public function resolve(string $method, string $uri): Tree<(Tv, ?arraykey), Tx> {
+	public function resolve(string $method, string $uri): ViewTree<Tv, Tx> {
 		$resolver = $this->resolver;
 		$resolved_dependencies = $this->get_dependencies()->map((Dispatcher<Tv, Tx, this> $dispatcher) ==> $dispatcher->dispatch($method, $uri)->resolve($method, $uri));
-		return new Tree($resolved_dependencies, $resolver($resolved_dependencies));
+		return new ViewTree($resolved_dependencies, $resolver($resolved_dependencies));
 	}
 	// public function get_resolver(): (function(KC<>): Awaitable<(Tv, ?arraykey)>) {
 	// 	// impossible return

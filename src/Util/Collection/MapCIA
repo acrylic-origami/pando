@@ -1,0 +1,22 @@
+<?hh // strict
+namespace Pando\Util\Collection;
+class MapCIA<Tk, +Tv> extends IterableConstIndexAccess<Tk, Tv> {
+	public function __construct(Map<Tk, Tv> $collection = Map{}) {
+		parent::__construct($collection, Set::fromKeysOf($collection));
+	}
+}
+class ImmMapCIA<Tk, +Tv> extends IterableConstIndexAccess<Tk, Tv> {
+	public function __construct(ImmMap<Tk, Tv> $collection = ImmMap{}) {
+		parent::__construct($collection, Set::fromKeysOf($collection));
+	}
+}
+class VectorCIA<Tk, +Tv> extends IterableConstIndexAccess<Tk, Tv> {
+	public function __construct(Vector<Tk, Tv> $collection = Vector{}) {
+		parent::__construct($collection, Set::fromKeysOf($collection));
+	}
+}
+class ImmVectorCIA<Tk, +Tv> extends IterableConstIndexAccess<Tk, Tv> {
+	public function __construct(ImmVector<Tk, Tv> $collection = ImmVector{}) {
+		parent::__construct($collection, Set::fromKeysOf($collection));
+	}
+}

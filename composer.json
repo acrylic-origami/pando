@@ -8,15 +8,25 @@
             "email": "dev@shufflr.io"
         }
     ],
+    "version": "0.1.0-dev",
     "require": {
         "facebook/xhp-lib": "2.x",
         "hhvm/xhp-js": "1.x",
         "greenlion/php-sql-parser":"~4.0",
-        "nikic/fast-route": "0.8.*"
+        "nikic/fast-route": "0.8.*",
+        "fog/pando-db": "dev-dev-master",
+        "fog/HHRx": "dev-dev-master"
     },
+    "repositories": [{
+        "type": "vcs",
+        "url": "/home/fog/hack/pando-db/"
+    },
+    {
+        "type": "vcs",
+        "url": "/home/fog/hack/hack-react/"
+    }],
     "autoload": {
         "classmap": ["root-ns/"],
-        "files": ["src/"],
         "psr-4": {
             "Pando\\": "src"
         }

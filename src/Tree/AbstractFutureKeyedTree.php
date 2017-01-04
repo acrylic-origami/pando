@@ -12,14 +12,14 @@
 // of _resolve.
 
 namespace Pando\Tree;
-class AbstractFutureKeyedTree<+Tv, +Tx as arraykey> extends FutureKeyedTree<Tv, Tx> {
-	<<__Override>>
+use \Pando\Util\Collection\IterableConstIndexAccess as IterableCIA;
+class AbstractFutureKeyedTree<+Tv, Tx as arraykey> extends FutureKeyedTree<Tv, Tx> {
 	public function __construct(
-		?ConstMap<Tx, Awaitable<this>> $subtree,
+		IterableCIA<Tx, Awaitable<this>> $forest,
 		private (function(this): Awaitable<Tv>) $_resolver,
 		?Tv $v = null
 		) {
-		parent::__construct($subtree, $v);
+		parent::__construct($forest, $v);
 	}
 	public function _resolve(): Awaitable<Tv> {
 		//  HH_FIXME[4090]: Could not find static method bind in type Closure

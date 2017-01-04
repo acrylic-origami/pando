@@ -15,8 +15,8 @@ class Database extends \PandoDB\Database {
 		$this->path = Vector{};
 		$this->current_pointer = $this->identifiers;
 	}
-	// unsure why this type error exists: $this->identifiers is precisely MutableTree _and_ private!
 	public function dig(string $identifier): void {
+		/* HH_FIXME[4110] We know that $this->identifiers is exactly MutableTree by the constructor and no other methods modifying it (i.e. it is `const`). The [4110] error reflects the non-const-ness. */
 		$this->identifiers->add_subtree($identifier, new MutableTree(new IterableIA(Map{})));
 	}
 	public function surface(): void {
@@ -31,20 +31,19 @@ class Database extends \PandoDB\Database {
 	
 	// Deprecated stream filtering methods
 	<<__Deprecated('Filter your own streams by iterating through the current identifiers (See `Pando\Database::get_current()`)')>>
-	public function collect_substreams(): \HHRx\Stream<\PandoDB\IdentifierCollection> {
+	public function collect_substreams(): ?\HHRx\Stream<\PandoDB\IdentifierCollection> {
 		return self::_collect_stream_from_tree($this->get_current());
 	}
-	<<__Deprecated('Filter your own streams by iterating through the current identifiers (See `Pando\Database::get_current_identifiers()`)')>>
-	private static function _collect_stream_from_tree(this::IdentifierTree $tree): \HHRx\Stream<\PandoDB\IdentifierCollection> {
-		$subtrees = $tree->get_forest();
-		$substreams = $subtrees->keyed_reduce(
-			(Map<mixed, \HHRx\Stream<\PandoDB\IdentifierCollection>> $prev, Pair<string, this::IdentifierTree> $subtree) ==> {
-				$substream = $subtree[1]->get_v();
-				if(!is_null($substream))
-					$prev->add(Pair{ $subtree[0], $substream });
-				return $prev->addAll(self::_collect_stream_from_tree($subtree[1]));
+	private static function _collect_stream_from_tree(this::IdentifierTree $tree): ?\HHRx\Stream<\PandoDB\IdentifierCollection> {
+		$flat_stream_tree = $tree->reduce(
+			(?Vector<\HHRx\Stream<\PandoDB\IdentifierCollection>> $prev, ?\HHRx\Stream<\PandoDB\IdentifierCollection> $next) ==> {
+				invariant(!is_null($prev), 'Implementation error: non-null `Vector` passed into `MutableTree::reduce` but null value generated.');
+				if(is_null($next))
+					return $prev;
+				else
+					return $prev->add($next);
 			},
-		Map{});
-		return \HHRx\KeyedStream::merge_all($substreams);
+		Vector{});
+		return \HHRx\KeyedStream::merge_all($flat_stream_tree);
 	}
 }

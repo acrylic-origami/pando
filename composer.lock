@@ -4,9 +4,135 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "90e2fe0c68a452ae89a51b6cc3818249",
-    "content-hash": "3f48e0daf34a867c227e1fd010a004b9",
+    "content-hash": "3db3fe988e60d6a990e115c12f1a5101",
     "packages": [
+        {
+            "name": "91carriage/phpunit-hhi",
+            "version": "5.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.simon.geek.nz/91-carriage/phpunit-hhi.git",
+                "reference": "7cf2db21dfadaaf8be24773f3d781fa43c8103a5"
+            },
+            "require": {
+                "hhvm": ">=3.9.0"
+            },
+            "conflict": {
+                "phpunit/phpunit": "<5.7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*"
+            },
+            "suggest": {
+                "91carriage/dbunit-hhi": "HHI files for use with DbUnit"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "6.0.x-dev",
+                    "dev-phpunit-5.7": "5.7.x-dev",
+                    "dev-phpunit-5.6": "5.6.x-dev",
+                    "dev-phpunit-5.5": "5.5.x-dev",
+                    "dev-phpunit-5.4": "5.4.x-dev",
+                    "dev-phpunit-5.3": "5.3.x-dev",
+                    "dev-phpunit-5.2": "5.2.x-dev",
+                    "dev-phpunit-5.1": "5.1.x-dev",
+                    "dev-phpunit-5.0": "5.0.x-dev",
+                    "dev-phpunit-4.8": "4.8.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "HHI definitions for PHPUnit",
+            "homepage": "https://git.simon.geek.nz/91-carriage/phpunit-hhi",
+            "keywords": [
+                "hack",
+                "hhvm",
+                "phpunit",
+                "testing"
+            ],
+            "time": "2017-01-29T01:05:19+00:00"
+        },
+        {
+            "name": "HHReact/HHReactor",
+            "version": "dev-dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/acrylic-origami/HHReactor.git",
+                "reference": "48f284b43f89cecc55846b408f910fd96fa6db97"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/acrylic-origami/HHReactor/zipball/48f284b43f89cecc55846b408f910fd96fa6db97",
+                "reference": "48f284b43f89cecc55846b408f910fd96fa6db97",
+                "shasum": ""
+            },
+            "require": {
+                "91carriage/phpunit-hhi": "~5.6",
+                "hhvm": "^3.16"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~5.6"
+            },
+            "type": "library",
+            "autoload": {
+                "exclude-from-classmap": [
+                    "._"
+                ],
+                "psr-4": {
+                    "HHReactor\\": "src",
+                    "HHReactor\\Test\\": "test"
+                }
+            },
+            "support": {
+                "source": "https://github.com/acrylic-origami/HHReactor/tree/dev-master",
+                "issues": "https://github.com/acrylic-origami/HHReactor/issues"
+            },
+            "time": "2017-02-09 00:59:09"
+        },
+        {
+            "name": "HHReact/pando-db",
+            "version": "dev-dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/acrylic-origami/ReactSQL.git",
+                "reference": "9763a9736b9fc1db9b2b8feab07b61340f4f7068"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/acrylic-origami/ReactSQL/zipball/9763a9736b9fc1db9b2b8feab07b61340f4f7068",
+                "reference": "9763a9736b9fc1db9b2b8feab07b61340f4f7068",
+                "shasum": ""
+            },
+            "require": {
+                "greenlion/php-sql-parser": "~4.0",
+                "hhreact/hhreactor": "dev-dev-master",
+                "react/react": "~0.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PandoDB\\": "src"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dev",
+                    "email": "dev@shufflr.io"
+                }
+            ],
+            "description": "Reactive SQL database wrapper for Hack.",
+            "support": {
+                "source": "https://github.com/acrylic-origami/ReactSQL/tree/dev-master",
+                "issues": "https://github.com/acrylic-origami/ReactSQL/issues"
+            },
+            "time": "2017-02-08 21:47:04"
+        },
         {
             "name": "analog/analog",
             "version": "1.0.9-stable",
@@ -54,7 +180,7 @@
                 "logging",
                 "syslog"
             ],
-            "time": "2016-11-17 14:39:33"
+            "time": "2016-11-17T14:39:33+00:00"
         },
         {
             "name": "evenement/evenement",
@@ -100,7 +226,7 @@
                 "event-dispatcher",
                 "event-emitter"
             ],
-            "time": "2012-11-02 14:49:47"
+            "time": "2012-11-02T14:49:47+00:00"
         },
         {
             "name": "facebook/xhp-lib",
@@ -146,54 +272,7 @@
                 "hhvm",
                 "xhp"
             ],
-            "time": "2016-01-20 18:48:31"
-        },
-        {
-            "name": "fog/HHRx",
-            "version": "dev-dev-master",
-            "source": {
-                "type": "git",
-                "url": "/home/fog/hack/hack-react/",
-                "reference": "73e2080eb6b347431341f393f4f17fafc72261a9"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "HHRx\\": "src"
-                }
-            },
-            "time": "2017-01-04 18:00:46"
-        },
-        {
-            "name": "fog/pando-db",
-            "version": "dev-dev-master",
-            "source": {
-                "type": "git",
-                "url": "/home/fog/hack/pando-db/",
-                "reference": "2599a28aaaf2c09ae454a628b0b54af185135386"
-            },
-            "require": {
-                "fog/hhrx": "dev-dev-master",
-                "greenlion/php-sql-parser": "~4.0",
-                "react/react": "~0.4"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "PandoDB\\": "src"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Dev",
-                    "email": "dev@shufflr.io"
-                }
-            ],
-            "description": "Reactive SQL database wrapper for Hack.",
-            "time": "2017-01-04 17:17:50"
+            "time": "2016-01-20T18:48:31+00:00"
         },
         {
             "name": "greenlion/php-sql-parser",
@@ -249,7 +328,7 @@
                 "parser",
                 "sql"
             ],
-            "time": "2016-10-12 04:29:55"
+            "time": "2016-10-12T04:29:55+00:00"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -307,7 +386,7 @@
                 "stream",
                 "uri"
             ],
-            "time": "2016-06-24 23:00:38"
+            "time": "2016-06-24T23:00:38+00:00"
         },
         {
             "name": "hhvm/xhp-js",
@@ -334,7 +413,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "description": "Easily create JS controllers for XHP elements, and XHP wrappers for React elements",
-            "time": "2015-07-09 16:48:17"
+            "time": "2015-07-09T16:48:17+00:00"
         },
         {
             "name": "nikic/fast-route",
@@ -377,7 +456,7 @@
                 "router",
                 "routing"
             ],
-            "time": "2016-03-25 23:46:52"
+            "time": "2016-03-25T23:46:52+00:00"
         },
         {
             "name": "psr/http-message",
@@ -427,7 +506,7 @@
                 "request",
                 "response"
             ],
-            "time": "2016-08-06 14:39:51"
+            "time": "2016-08-06T14:39:51+00:00"
         },
         {
             "name": "psr/log",
@@ -474,7 +553,7 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2016-10-10 12:19:37"
+            "time": "2016-10-10T12:19:37+00:00"
         },
         {
             "name": "react/cache",
@@ -508,7 +587,7 @@
             "keywords": [
                 "cache"
             ],
-            "time": "2016-02-25 18:17:16"
+            "time": "2016-02-25T18:17:16+00:00"
         },
         {
             "name": "react/child-process",
@@ -547,7 +626,7 @@
             "keywords": [
                 "process"
             ],
-            "time": "2016-08-01 18:09:48"
+            "time": "2016-08-01T18:09:48+00:00"
         },
         {
             "name": "react/dns",
@@ -584,7 +663,7 @@
                 "dns",
                 "dns-resolver"
             ],
-            "time": "2016-08-01 10:09:07"
+            "time": "2016-08-01T10:09:07+00:00"
         },
         {
             "name": "react/event-loop",
@@ -628,7 +707,7 @@
                 "asynchronous",
                 "event-loop"
             ],
-            "time": "2016-03-08 02:09:32"
+            "time": "2016-03-08T02:09:32+00:00"
         },
         {
             "name": "react/http",
@@ -665,7 +744,7 @@
             "keywords": [
                 "http"
             ],
-            "time": "2016-11-09 15:20:39"
+            "time": "2016-11-09T15:20:39+00:00"
         },
         {
             "name": "react/http-client",
@@ -705,7 +784,7 @@
             "keywords": [
                 "http"
             ],
-            "time": "2016-12-02 10:17:42"
+            "time": "2016-12-02T10:17:42+00:00"
         },
         {
             "name": "react/promise",
@@ -748,7 +827,7 @@
                 "promise",
                 "promises"
             ],
-            "time": "2016-12-22 14:09:01"
+            "time": "2016-12-22T14:09:01+00:00"
         },
         {
             "name": "react/react",
@@ -801,27 +880,33 @@
                 "event-loop",
                 "reactor"
             ],
-            "time": "2014-12-11 02:06:55"
+            "time": "2014-12-11T02:06:55+00:00"
         },
         {
             "name": "react/socket",
-            "version": "v0.4.4",
+            "version": "v0.4.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/reactphp/socket.git",
-                "reference": "d61930e1aefb2a704b0adbe6bb97ee4a835d6a96"
+                "reference": "cf074e53c974df52388ebd09710a9018894745d2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/reactphp/socket/zipball/d61930e1aefb2a704b0adbe6bb97ee4a835d6a96",
-                "reference": "d61930e1aefb2a704b0adbe6bb97ee4a835d6a96",
+                "url": "https://api.github.com/repos/reactphp/socket/zipball/cf074e53c974df52388ebd09710a9018894745d2",
+                "reference": "cf074e53c974df52388ebd09710a9018894745d2",
                 "shasum": ""
             },
             "require": {
                 "evenement/evenement": "~2.0|~1.0",
                 "php": ">=5.3.0",
                 "react/event-loop": "0.4.*|0.3.*",
-                "react/stream": "^0.4.2"
+                "react/promise": "^2.0 || ^1.1",
+                "react/stream": "^0.4.5"
+            },
+            "require-dev": {
+                "clue/block-react": "^1.1",
+                "phpunit/phpunit": "~4.8",
+                "react/socket-client": "^0.5.1"
             },
             "type": "library",
             "autoload": {
@@ -833,11 +918,11 @@
             "license": [
                 "MIT"
             ],
-            "description": "Library for building an evented socket server.",
+            "description": "Async, streaming plaintext TCP/IP and secure TLS socket server for React PHP",
             "keywords": [
                 "Socket"
             ],
-            "time": "2016-12-19 22:52:38"
+            "time": "2017-01-26T09:23:38+00:00"
         },
         {
             "name": "react/socket-client",
@@ -879,20 +964,20 @@
             "keywords": [
                 "Socket"
             ],
-            "time": "2016-12-06 10:54:49"
+            "time": "2016-12-06T10:54:49+00:00"
         },
         {
             "name": "react/stream",
-            "version": "v0.4.5",
+            "version": "v0.4.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/reactphp/stream.git",
-                "reference": "23389503012e1ab721ad498a5a1f4b39f7a43c00"
+                "reference": "44dc7f51ea48624110136b535b9ba44fd7d0c1ee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/reactphp/stream/zipball/23389503012e1ab721ad498a5a1f4b39f7a43c00",
-                "reference": "23389503012e1ab721ad498a5a1f4b39f7a43c00",
+                "url": "https://api.github.com/repos/reactphp/stream/zipball/44dc7f51ea48624110136b535b9ba44fd7d0c1ee",
+                "reference": "44dc7f51ea48624110136b535b9ba44fd7d0c1ee",
                 "shasum": ""
             },
             "require": {
@@ -923,15 +1008,15 @@
                 "pipe",
                 "stream"
             ],
-            "time": "2016-11-13 17:06:02"
+            "time": "2017-01-25T14:44:14+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "fog/pando-db": 20,
-        "fog/hhrx": 20
+        "hhreact/pando-db": 20,
+        "hhreact/hhreactor": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

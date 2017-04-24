@@ -1,6 +1,6 @@
 <?hh // strict
 namespace Pando;
-use \Pando\Tree\Tree;
+use \HHRx\Tree\Tree;
 class JSONParser implements Parser {
 	public function __construct() {}
 	public function parse(string $str): ?\KeyedContainer<arraykey, mixed> {

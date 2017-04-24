@@ -1,11 +1,11 @@
 <?hh // strict
 namespace Pando;
 use Pando\Route;
-use Pando\Tree\KeyedTree as KT;
-// use Pando\Tree\Tree;
-use Pando\Tree\UnresolvedTree;
-use Pando\Tree\AbstractFutureKeyedTree as AbstractFKT;
-use Pando\Util\Collection\KeyedContainerWrapper as KC;
+use HHRx\Tree\KeyedTree as KT;
+// use HHRx\Tree\Tree;
+use HHRx\Tree\UnresolvedTree;
+use HHRx\Tree\AbstractFutureKeyedTree as AbstractFKT;
+use HHRx\Util\Collection\KeyedContainerWrapper as KC;
 // type RenderTree<Tk, Tv> = AbstractFKT<Tk, Tv>; // the `string` has immense importance here: it dictates the final type of the result. If we're using XHP, `string` will be replaced by XHPRoot. (replaced by generic Tv, to keep things general for the meantime. Maybe there's such thing as a __toStringable?)
 // consider wrapping an FKT, and injecting the information into it at dispatch-time.
 // nah, then it just re-becomes Dispatcher. We can't get around needing that route information.
@@ -20,7 +20,7 @@ class RootDispatcher<+Tv, +Tk as arraykey, +TRoute as Route<Tv, Tk>> {
 				if($route instanceof Route\Default && is_null($this->default)) 
 					$this->default = $route;
 				elseif($route instanceof Route\PathedRoute)
-					$r->addRoute(\Pando\Util\Class\classname($route), $route->path, $route);
+					$r->addRoute(\HHRx\Util\Class\classname($route), $route->path, $route);
 			}
 		});
 	}

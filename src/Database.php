@@ -1,9 +1,9 @@
 <?hh // strict
 namespace Pando;
-use \Pando\Tree\Tree;
-use \Pando\Tree\MutableTree;
-use \Pando\Util\Collection\KeyedContainerWrapper as KC;
-use \Pando\Util\Collection\IterableIndexAccess as IterableIA;
+use \HHRx\Tree\Tree;
+use \HHRx\Tree\MutableTree;
+use \HHRx\Util\Collection\KeyedContainerWrapper as KC;
+use \HHRx\Util\Collection\IterableIndexAccess as IterableIA;
 class Database extends \PandoDB\Database {
 	const type IdentifierTree = MutableTree<\HHRx\Stream<\PandoDB\IdentifierCollection>, string>;
 	private this::IdentifierTree $identifiers;

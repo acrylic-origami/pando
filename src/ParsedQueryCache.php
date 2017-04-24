@@ -1,6 +1,6 @@
 <?hh // strict
 namespace Pando;
-use Pando\Tree\Tree;
+use HHRx\Tree\Tree;
 class ParsedQueryCache {
 	const string IDENTIFY_QUOTE = '`';
 	const string IDENTIFY_DELIMITER = '.';

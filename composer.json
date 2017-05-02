@@ -1,33 +1,31 @@
 {
-    "name": "pando/pando",
-    "description": "A Hack web framework for managing dependencies and implementing two-way binding for a web application, built into a majestic tree.",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Dev",
-            "email": "dev@shufflr.io"
-        }
-    ],
-    "version": "0.1.0-dev",
-    "require": {
-        "facebook/xhp-lib": "2.x",
-        "hhvm/xhp-js": "1.x",
-        "greenlion/php-sql-parser":"~4.0",
-        "nikic/fast-route": "0.8.*",
-        "HHReact/pando-db": "dev-dev-master",
-        "HHReact/HHReactor": "dev-dev-master"
-    },
-    "repositories": [{
-        "type": "vcs",
-        "url": "https://github.com/acrylic-origami/ReactSQL.git"
-    }, {
-        "type": "vcs",
-        "url": "https://github.com/acrylic-origami/HHReactor.git"
-    }],
-    "autoload": {
-        "classmap": ["root-ns/"],
-        "psr-4": {
-            "Pando\\": "src"
-        }
-    }
+	"name": "pando/pando",
+	"description": "A Hack web framework for managing dependencies and implementing two-way binding for a web application, built into a majestic tree.",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Dev",
+			"email": "dev@shufflr.io"
+		}
+	],
+	"version": "0.1.0-dev",
+	"require": {
+		"facebook/xhp-lib": "2.x",
+		"hhvm/xhp-js": "1.x",
+		"greenlion/php-sql-parser":"~4.0",
+		"facebook/hack-router": "dev-master",
+		"HHReact/HHReactor": "dev-master",
+		"guzzlehttp/psr7": "dev-master",
+		"fredemmott/hack-error-suppressor": "dev-master as 1.0.1"
+	},
+	"repositories": [{
+		"type": "vcs",
+		"url": "https://github.com/acrylic-origami/HHReactor.git"
+	}],
+	"autoload": {
+		"classmap": ["root-ns/"],
+		"psr-4": {
+			"Pando\\": "src"
+		}
+	}
 }

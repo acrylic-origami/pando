@@ -38,7 +38,7 @@ class RootDispatcher<+Tv, +Tk as arraykey, +TRoute as Route<Tv, Tk>> {
 		elseif(!is_null($this->default))
 			$route = $this->default;
 		else
-			throw new \BadMethodCallException(sprintf('No routes match `%s` request for `%s` path and no default available for path.', $method, $uri));
+			throw new \InvalidArgumentException(sprintf('No routes match `%s` request for `%s` path and no default available for path.', $method, $uri));
 		
 		invariant(!is_null($this->db), 'Database not set at top level or did propagate properly to non-root nodes in view tree.');
 		$route->set_database($this->db);

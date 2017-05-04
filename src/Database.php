@@ -1,49 +1,33 @@
 <?hh // strict
 namespace Pando;
-use \HHRx\Tree\Tree;
-use \HHRx\Tree\MutableTree;
-use \HHRx\Util\Collection\KeyedContainerWrapper as KC;
-use \HHRx\Util\Collection\IterableIndexAccess as IterableIA;
-class Database extends \PandoDB\Database {
-	const type IdentifierTree = MutableTree<\HHRx\Stream<\PandoDB\IdentifierCollection>, string>;
-	private this::IdentifierTree $identifiers;
-	private Vector<this::IdentifierTree> $path;
-	private this::IdentifierTree $current_pointer;
-	public function __construct(?\HHRx\Stream<\PandoDB\IdentifierCollection> $global_stream) {
-		parent::__construct($global_stream);
-		$this->identifiers = new MutableTree(new IterableIA(Map{}));
+use Pando\Collection\MapTree;
+newtype QueryTree<TQuery> as \IteratorAggregate<Pair<string, Vector<TQuery>>> = MapTree<string, Vector<TQuery>>;
+// newtype ConstQueryTree<+TQuery> = Tree<string, \ConstVector<TQuery>>;
+abstract class Database<TQuery> {
+	private QueryTree<TQuery> $queries;
+	private Vector<QueryTree<TQuery>> $path;
+	public function __construct() {
+		$this->queries = new MapTree(Map{}, Vector{});
 		$this->path = Vector{};
-		$this->current_pointer = $this->identifiers;
 	}
-	public function dig(string $identifier): void {
-		/* HH_FIXME[4110] We know that $this->identifiers is exactly MutableTree by the constructor and no other methods modifying it (i.e. it is `const`). The [4110] error reflects the non-const-ness. */
-		$this->identifiers->add_subtree($identifier, new MutableTree(new IterableIA(Map{})));
+	public function dig(string $child_key): void {
+		/* HH_FIXME[4110] We know that $this->queries is exactly MutableTree by the constructor and no other methods modifying it (i.e. it is `const`). The [4110] error reflects the non-const-ness. */
+		$this->queries->set_subtree($child_key, new MapTree(Map{}, Vector{}));
+		$child = $this->queries->get_subtree($child_key);
+		invariant(!is_null($child), 'Wat, I just set it.');
+		$this->path->add($child);
 	}
 	public function surface(): void {
-		try 
-			$this->current_pointer = $this->path->pop();
-		catch(\InvalidOperationException $e)
-			$this->current_pointer = $this->identifiers; // At root; path is empty
+		if(!$this->path->isEmpty())
+			$this->path->pop();
 	}
-	public function get_current(): this::IdentifierTree {
-		return $this->current_pointer;
+	private function _get_current_queries(): Vector<TQuery> {
+		$current = $this->path->lastValue() ?? $this->queries;
+		$queries = $current->get_v();
+		invariant(!is_null($queries), 'Unexpected null query list. Implementation error, or unset by nefarious outer forces.');
+		return $queries;
 	}
-	
-	// Deprecated stream filtering methods
-	<<__Deprecated('Filter your own streams by iterating through the current identifiers (See `Pando\Database::get_current()`)')>>
-	public function collect_substreams(): ?\HHRx\Stream<\PandoDB\IdentifierCollection> {
-		return self::_collect_stream_from_tree($this->get_current());
-	}
-	private static function _collect_stream_from_tree(this::IdentifierTree $tree): ?\HHRx\Stream<\PandoDB\IdentifierCollection> {
-		$flat_stream_tree = $tree->reduce(
-			(?Vector<\HHRx\Stream<\PandoDB\IdentifierCollection>> $prev, ?\HHRx\Stream<\PandoDB\IdentifierCollection> $next) ==> {
-				invariant(!is_null($prev), 'Implementation error: non-null `Vector` passed into `MutableTree::reduce` but null value generated.');
-				if(is_null($next))
-					return $prev;
-				else
-					return $prev->add($next);
-			},
-		Vector{});
-		return \HHRx\KeyedStream::merge_all($flat_stream_tree);
+	protected function _log_query(TQuery $query): void {
+		$this->_get_current_queries()->add($query);
 	}
 }

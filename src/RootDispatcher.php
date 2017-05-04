@@ -1,20 +1,23 @@
 <?hh // strict
 namespace Pando;
-use Pando\Route;
-use HHRx\Tree\KeyedTree as KT;
-// use HHRx\Tree\Tree;
-use HHRx\Tree\UnresolvedTree;
-use HHRx\Tree\AbstractFutureKeyedTree as AbstractFKT;
-use HHRx\Util\Collection\KeyedContainerWrapper as KC;
+use Facebook\HackRouter\RequestParameters;
+use Facebook\HackRouter\BaseRouter;
 // type RenderTree<Tk, Tv> = AbstractFKT<Tk, Tv>; // the `string` has immense importance here: it dictates the final type of the result. If we're using XHP, `string` will be replaced by XHPRoot. (replaced by generic Tv, to keep things general for the meantime. Maybe there's such thing as a __toStringable?)
 // consider wrapping an FKT, and injecting the information into it at dispatch-time.
 // nah, then it just re-becomes Dispatcher. We can't get around needing that route information.
-class RootDispatcher<+Tv, +Tk as arraykey, +TRoute as Route<Tv, Tk>> {
-	private KC<Tk, KC<Tk, TRoute>> $search_tree; // method -> route string -> route
+class RootDispatcher<+Tv, +Tk as arraykey, TQuery, TDb as Database<TQuery>, +TRoute as Route<Tv, Tk, TQuery, TDb>> extends BaseRouter<TRoute> {
+	private Map<Tk, Map<Tk, TRoute>> $search_tree; // method -> route string -> route
 	                                             //                             └── dependency -> this
 	private ?Route\Route<Tv, Tk> $default;
 	private \FastRoute\Dispatcher $_dispatcher;
-	public function __construct(Iterable<TRoute> $routes, private ?PandoDB\Database $db = null, (function((function(\FastRoute\RouteCollector): void)): \FastRoute\Dispatcher) $fdispatcher = fun('\FastRoute\simpleDispatcher')) {
+	public function __construct(Iterable<TRoute> $routes, private ?Database $db = null) {
+		$hack_router_routes = new Map(); // ImmMap<HTTPMethod, ImmMap<string, (UriPattern, (function(RequestParameters, ImmMap<string, Awaitable<string>>, Database): \Stringish))>>
+		// AKA ImmMap<HTTPMethod, ImmMap<string, classname<WebController>>>, but without anonymous classes, this is totally impractical
+		foreach($routes as $route) {
+			if($hack_router_routes->containsKey($route::get_method()))
+				$hack_router_routes[$route::get_method()]->add();
+		}
+		
 		$this->_dispatcher = $fdispatcher((\FastRoute\RouteCollector $r) ==> {
 			foreach($routes as $route) {
 				if($route instanceof Route\Default && is_null($this->default)) 

@@ -29,7 +29,7 @@ class Dispatcher<Tx as arraykey, Tv as \Stringish, -TState as State\State<Tx, Tv
 		$this->routes = $immutable_routes->immutable();
 	}
 	
-	public function getRoutes(): ImmMap<HttpMethod, ImmMap<string, Route<Tx, Tv, TState, TComparable>>> {
+	public function getRoutes(): ImmMap<HttpMethod, ImmMap<string, BaseRoute<Tx, Tv, TState>>> {
 		return $this->routes;
 	}
 }

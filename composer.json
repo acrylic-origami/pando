@@ -16,11 +16,15 @@
 		"facebook/hack-router": "dev-master",
 		"HHReact/HHReactor": "dev-master",
 		"guzzlehttp/psr7": "dev-master",
-		"fredemmott/hack-error-suppressor": "dev-master as 1.0.1"
+		"fredemmott/hack-error-suppressor": "dev-master as 1.0.1",
+		"hhvm": "^3.15"
 	},
 	"repositories": [{
 		"type": "vcs",
 		"url": "https://github.com/acrylic-origami/HHReactor.git"
+	}, {
+		"type": "vcs",
+		"url": "https://github.com/acrylic-origami/hack-router.git"
 	}],
 	"autoload": {
 		"classmap": ["root-ns/"],

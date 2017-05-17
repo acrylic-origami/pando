@@ -1,12 +1,13 @@
 <?hh // strict
 namespace Pando\Route;
-use \Pando\Route;
-use \HHRx\Util\Collection\KeyedContainerWrapper as KC;
-class Default<+Tv, Tx as arraykey> extends Route<Tv, Tx> {
-	public function __construct(
-		(function(KC<Tx, (Tv, ?arraykey)>): (Tv, ?arraykey)) $resolver, 
-		ImmMap<Tx, \Pando\Dispatcher<Tv, Tx, this>> $dep = ImmMap{}
-	) {
-		parent::__construct('', $resolver, $dep);
+use \Pando\{
+	Route,
+	State\State,
+	ComparableView
+};
+use Facebook\HackRouter\HttpMethod;
+class Fallback<Tx as arraykey, Tv as \Stringish, -TState as State<Tx, Tv>, +TComparable as ComparableView<Tv, TComparable>> extends Route<Tx, Tv, TState, TComparable> {
+	public static function get_method(): HttpMethod {
+		return HttpMethod::/* IDC */GET;
 	}
 }

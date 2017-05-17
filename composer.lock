@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "8cf990d176a7ae851dfa88de307da743",
+    "content-hash": "6f931947d95589c1a4141ee33a1b28be",
     "packages": [
         {
             "name": "91carriage/phpunit-hhi",
@@ -106,16 +106,16 @@
         },
         {
             "name": "facebook/definition-finder",
-            "version": "v1.5.0",
+            "version": "v1.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hhvm/definition-finder.git",
-                "reference": "dfa55da9e9e44eb28f6c65bb86494012da045e1f"
+                "reference": "ccb1471e263714b7313e54923bb4f5c1b6af7b1f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hhvm/definition-finder/zipball/dfa55da9e9e44eb28f6c65bb86494012da045e1f",
-                "reference": "dfa55da9e9e44eb28f6c65bb86494012da045e1f",
+                "url": "https://api.github.com/repos/hhvm/definition-finder/zipball/ccb1471e263714b7313e54923bb4f5c1b6af7b1f",
+                "reference": "ccb1471e263714b7313e54923bb4f5c1b6af7b1f",
                 "shasum": ""
             },
             "require": {
@@ -144,20 +144,20 @@
                 "hack",
                 "hhvm"
             ],
-            "time": "2017-02-17T03:56:56+00:00"
+            "time": "2017-05-03T02:44:04+00:00"
         },
         {
             "name": "facebook/hack-router",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/hhvm/hack-router.git",
-                "reference": "d9cf3ef612e4218d14a2651517cbacc0352532e6"
+                "url": "https://github.com/acrylic-origami/hack-router.git",
+                "reference": "8af19f7a2003aebf2c35cdd790286f227cebc78e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hhvm/hack-router/zipball/d9cf3ef612e4218d14a2651517cbacc0352532e6",
-                "reference": "d9cf3ef612e4218d14a2651517cbacc0352532e6",
+                "url": "https://api.github.com/repos/acrylic-origami/hack-router/zipball/8af19f7a2003aebf2c35cdd790286f227cebc78e",
+                "reference": "8af19f7a2003aebf2c35cdd790286f227cebc78e",
                 "shasum": ""
             },
             "require": {
@@ -180,7 +180,11 @@
                     "src/"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "classmap": [
+                    "tests/"
+                ]
+            },
             "description": "URI routing for Hack",
             "homepage": "https://github.com/hhvm/hack-router",
             "keywords": [
@@ -189,7 +193,10 @@
                 "router",
                 "routing"
             ],
-            "time": "2017-02-15 01:38:10"
+            "support": {
+                "source": "https://github.com/acrylic-origami/hack-router/tree/master"
+            },
+            "time": "2017-05-09 00:11:30"
         },
         {
             "name": "facebook/hhvm-autoload",
@@ -519,12 +526,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/acrylic-origami/HHReactor.git",
-                "reference": "d528a71950460d18945e7ed0fc33fddbd62ad32a"
+                "reference": "1c9302cfe3574780a2e1531674998fa70bd26083"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/acrylic-origami/HHReactor/zipball/d528a71950460d18945e7ed0fc33fddbd62ad32a",
-                "reference": "d528a71950460d18945e7ed0fc33fddbd62ad32a",
+                "url": "https://api.github.com/repos/acrylic-origami/HHReactor/zipball/1c9302cfe3574780a2e1531674998fa70bd26083",
+                "reference": "1c9302cfe3574780a2e1531674998fa70bd26083",
                 "shasum": ""
             },
             "require": {
@@ -535,6 +542,7 @@
             "require-dev": {
                 "91carriage/phpunit-hhi": "~5.6",
                 "appertly/hphpdoc": "dev-master",
+                "fredemmott/hack-error-suppressor": "dev-master as 1.0.1",
                 "hhvm/systemlib-extractor": "^0.1.0",
                 "libreworks/psr3-log-hhi": "^1.0.0",
                 "phpdocumentor/reflection-docblock": "~2.0",
@@ -554,7 +562,7 @@
                 "source": "https://github.com/acrylic-origami/HHReactor/tree/master",
                 "issues": "https://github.com/acrylic-origami/HHReactor/issues"
             },
-            "time": "2017-04-23 15:12:28"
+            "time": "2017-05-04 03:23:04"
         },
         {
             "name": "hhvm/xhp-js",

@@ -7,7 +7,5 @@ use \Pando\{
 };
 use Facebook\HackRouter\HttpMethod;
 class Fallback<Tx as arraykey, Tv as \Stringish, -TState as State<Tx, Tv>, +TComparable as ComparableView<Tv, TComparable>> extends Route<Tx, Tv, TState, TComparable> {
-	public static function get_method(): HttpMethod {
-		return HttpMethod::/* IDC */GET;
-	}
+	use /* IDC */ GET<Tx, Tv, TState>;
 }

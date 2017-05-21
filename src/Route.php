@@ -30,23 +30,29 @@ abstract class Route<Tx as arraykey, Tv as \Stringish, -TState as State\State<Tx
 		return $this->getUriPattern()->getFastRouteFragment();
 	}
 	
+	protected function get_resolver(): (function(RequestParameters, TState): Awaitable<TComparable>) {
+		return $this->resolver;
+	}
+	
 	public function get_dependencies(): \ConstMap<Tx, Dispatcher<Tx, Tv, TState>> {
 		return $this->dependencies;
 	}
 	
-	public async function render(RequestParameters $params, string $path): Awaitable<TComparable> {
+	public function render(RequestParameters $params, string $path): Awaitable<TComparable> {
 		$resolver = $this->resolver;
-		$this->stashed_view = await $resolver($params, $this->state_factory->make($this, $path));
-		return $this->stashed_view;
+		return $resolver($params, $this->state_factory->make($this, $path));
 	}
 	
-	public async function rerender_and_compare(RequestParameters $params, string $path): Awaitable<bool> {
+	public async function rerender_and_compare(RequestParameters $params, string $path): Awaitable<?TComparable> {
 		$stashed_view = $this->stashed_view;
 		invariant(!is_null($stashed_view), 'The view was not rendered before trying to rerender.');
 		
 		$resolver = $this->resolver;
 		$new_view = await $resolver($params, $this->state_factory->make($this, $path));
-		return $stashed_view->compare($new_view);
+		if($stashed_view->compare($new_view))
+			return $new_view;
+		else
+			return null;
 	}
 	// public function resolve(string $method, string $uri): ViewTree<Tv, Tx> {
 	// 	$resolver = $this->resolver;

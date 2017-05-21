@@ -17,5 +17,5 @@ interface BaseRoute<Tx as arraykey, Tv as \Stringish, -TState as State\State<Tx,
 	public function getFastRoutePattern(): string;
 	public function get_dependencies(): \ConstMap<Tx, Dispatcher<Tx, Tv, TState>>;
 	public function render(RequestParameters $params, string $path): Awaitable<View<Tv>>;
-	public function rerender_and_compare(RequestParameters $params, string $path): Awaitable<bool>;
+	public function rerender_and_compare(RequestParameters $params, string $path): Awaitable<?View<Tv>>;
 }

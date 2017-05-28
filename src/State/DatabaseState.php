@@ -1,21 +1,31 @@
 <?hh // strict
 namespace Pando\State;
 use Pando\{
-	BaseRoute
+	BaseRoute,
+	Collection\MapTree
 };
-use Pando\Collection\MapTree;
+
+use Facebook\HackRouter\HttpMethod;
 newtype QueryTree<TQuery> as \IteratorAggregate<Pair<string, Vector<TQuery>>> = MapTree<string, Vector<TQuery>>;
 // newtype ConstQueryTree<+TQuery> = Tree<string, \ConstVector<TQuery>>;
-abstract class DatabaseState<Tx as arraykey, Tv as \Stringish, TQuery> extends State<Tx, Tv> {
+abstract class DatabaseState<Tx as arraykey, TQuery> extends State<Tx, ViewTree> { // it's database + stashing, which is certainly not general, but let's inject the opinion here
 	private QueryTree<TQuery> $queries;
-	private Vector<QueryTree<TQuery>> $query_path;
+	private Vector<QueryTree<TQuery>> $query_path = Vector{};
+	private Map<Tx, Map<HttpMethod, Map<string, ViewTree>>> $stashed_viewforest = Map{};
 	public function __construct(
 		BaseRoute<Tx, Tv, this> $context,
 		string $path
 		) {
 		parent::__construct($context, $path);
 		$this->queries = new MapTree(Map{}, Vector{});
-		$this->query_path = Vector{};
+	}
+	public async function at(Tx $k): Awaitable<ViewTree> {
+		$view = parent::at($k);
+		$stashed_viewforest->set($k, Map{ $this->method => Map{ $this->context->getFastRoutePattern() => $view } }); // note the overwriting here
+		return $view;
+	}
+	public function get_stashed_viewforest(): Map<Tx, Map<HttpMethod, Map<string, ViewTree>>> {
+		return $this->stashed_viewforest; // should clone? Think upon it; will this state be reused?
 	}
 	public function dig(string $child_key): void {
 		/* HH_FIXME[4110] We know that $this->queries is exactly MutableTree by the constructor and no other methods modifying it (i.e. it is `const`). The [4110] error reflects the non-const-ness. */

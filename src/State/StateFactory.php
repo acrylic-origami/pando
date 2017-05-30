@@ -24,7 +24,7 @@ class State {
 	/* HH_FIXME[4120] Intending to use $context in object-protected way */
 	public function __construct(protected BaseRoute<Tx, Tv, this> $context, protected string $path) {}
 	
-	public async function at<TExistential as ComparableView<ViewTree<TExistential>, TExistential>(Tx $k): Awaitable<ViewTree<TExistential>> {
+	public async function at(string $k): Awaitable<\XHPRoot> {
 		$dispatcher = $this->context->get_dependencies()->at($k);
 		list($route, $params) = $dispatcher->routeRequest($this->context::get_method(), $this->path);
 		$view_wrapper = await $route->render(new RequestParameters($route->getUriPattern()->getParameters(), ImmVector{}, $params), $this->path);
